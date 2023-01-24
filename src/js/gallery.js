@@ -16,6 +16,7 @@ const appendRandomPhotos = async () => {
     const { data } = await pixabayAPI.fetchRandomPhotos();
 
     refs.galleryListEl.innerHTML = createGalleryCards(data.hits);
+    refs.loadMoreBtnEl.disabled();
   } catch (err) {
     console.log(err);
   }
@@ -29,6 +30,11 @@ const onSearchSubmit = async e => {
   pixabayAPI.query = e.target.elements.searchQuery.value;
   pixabayAPI.page = 1;
 
+  if (pixabayAPI.query === '') {
+    Notiflix.Notify.failure('Sorry, type something');
+    refs.loadMoreBtnEl.disabled();
+  }
+
   try {
     const { data } = await pixabayAPI.fetchPhotos();
     if (data.hits.length === 0) {
@@ -40,10 +46,17 @@ const onSearchSubmit = async e => {
       return;
     }
     if (data.totalHits > 40) {
+      e.target.reset();
       refs.loadMoreBtnEl.classList.remove('is-hidden')
+    } else {
+      refs.loadMoreBtnEl.classList.add('is-hidden')
+    }
+    if (data.totalHits < 40) {
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     }
 
     refs.galleryListEl.innerHTML = createGalleryCards(data.hits);
+
 
   } catch (err) {
     console.log(err);
