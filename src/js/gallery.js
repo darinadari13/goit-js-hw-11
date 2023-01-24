@@ -85,7 +85,7 @@ const onLoadMoreClick = async e => {
     const totalPage = Math.ceil(data.totalHits / 40);
 
     if (totalPage === pixabayAPI.page) {
-      refs.loadMoreBtnEl.classList.add('is-hidden');
+      refs.loadMoreBtnEl.disabled();
       Notiflix.Notify.info(`Were sorry, but you've reached the end of search results.`);
     }
   }
