@@ -16,13 +16,13 @@ const appendRandomPhotos = async () => {
     const { data } = await pixabayAPI.fetchRandomPhotos();
 
     refs.galleryListEl.innerHTML = createGalleryCards(data.hits);
-    refs.loadMoreBtnEl.disabled();
+    refs.loadMoreBtnEl.disabled = 'true';
   } catch (err) {
     console.log(err);
   }
 };
 
-appendRandomPhotos();
+// appendRandomPhotos();
 
 const onSearchSubmit = async e => {
   e.preventDefault();
@@ -32,7 +32,7 @@ const onSearchSubmit = async e => {
 
   if (pixabayAPI.query === '') {
     Notiflix.Notify.failure('Sorry, type something');
-    refs.loadMoreBtnEl.disabled();
+    refs.loadMoreBtnEl.disabled = 'true';
   }
 
   try {
@@ -85,7 +85,7 @@ const onLoadMoreClick = async e => {
     const totalPage = Math.ceil(data.totalHits / 40);
 
     if (totalPage === pixabayAPI.page) {
-      refs.loadMoreBtnEl.disabled();
+      refs.loadMoreBtnEl.disabled = 'true';
       Notiflix.Notify.info(`Were sorry, but you've reached the end of search results.`);
     }
   }
