@@ -17,6 +17,8 @@ const showLastPageNotification = () => {
 
 const onSearchSubmit = async e => {
   e.preventDefault();
+  refs.loadMoreBtnEl.disabled = true;
+  refs.loadMoreBtnEl.classList.add('is-hidden');
 
   const { value } = e.target.elements.searchQuery;
 
@@ -45,6 +47,7 @@ const onSearchSubmit = async e => {
       showLastPageNotification()
       refs.searchBtnEl.disabled = false;
     } else {
+      refs.loadMoreBtnEl.disabled = false;
       refs.loadMoreBtnEl.classList.remove('is-hidden');
     }
 
@@ -56,16 +59,6 @@ const onSearchSubmit = async e => {
   }
 };
 
-const makeLittleScroll = () => {
-  const { height: cardHeight } = document
-    .querySelector(".gallery")
-    .firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: "smooth",
-  });
-}
 
 const onLoadMoreClick = async e => {
   pixabayAPI.page += 1;
@@ -75,7 +68,7 @@ const onLoadMoreClick = async e => {
 
   refs.galleryListEl.insertAdjacentHTML('beforeend', createGalleryCards(hits));
 
-  makeLittleScroll()
+
 
   const isLastPage = Math.ceil(totalHits / 40) === pixabayAPI.page
 
