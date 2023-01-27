@@ -8,6 +8,7 @@ export class PixabayAPI {
   constructor() {
     this.page = 1;
     this.query = null;
+    this.hits = [];
   }
 
   fetchPhotos() {
@@ -22,24 +23,24 @@ export class PixabayAPI {
         key: PixabayAPI.API_KEY,
       },
     };
-    return axios.get(`${PixabayAPI.BASE_URL}`, searchParams);
+    return axios.get(`${PixabayAPI.BASE_URL}`, searchParams)
   }
 
 
-  fetchRandomPhotos() {
-    const randomPage = Math.ceil((1 + Math.random() * (12 + 1 - 1)));
-    const searchParams = {
-      params: {
-        page: randomPage,
-        per_page: 40,
-        category: 'fashion',
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        key: PixabayAPI.API_KEY,
-      },
-    };
-    return axios.get(`${PixabayAPI.BASE_URL}`, searchParams);
-  }
+  // fetchRandomPhotos() {
+  //   const randomPage = Math.ceil((1 + Math.random() * (12 + 1 - 1)));
+  //   const searchParams = {
+  //     params: {
+  //       page: randomPage,
+  //       per_page: 40,
+  //       category: 'fashion',
+  //       image_type: 'photo',
+  //       orientation: 'horizontal',
+  //       safesearch: true,
+  //       key: PixabayAPI.API_KEY,
+  //     },
+  //   };
+  //   return axios.get(`${PixabayAPI.BASE_URL}`, searchParams);
+  // }
 }
 

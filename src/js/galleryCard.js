@@ -20,6 +20,7 @@ export const createGalleryCards = cardInfo => {
   </div>
 </div>`
   });
+
   return cardArr.join('');
 
 };
